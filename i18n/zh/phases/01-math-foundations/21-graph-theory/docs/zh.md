@@ -83,7 +83,7 @@ D[i][j] &= 0 \quad \text{for } i \ne j
 \end{aligned}
 ```
 
-对于三角形的例子:$D = \operatorname{diag}(2, 2, 2)$因为每个节点连接到另外两个节点.
+对于三角形的例子:$D = \mathop{\mathrm{diag}}(2, 2, 2)$因为每个节点连接到另外两个节点.
 
 度告诉你关于节点的重要性.高度 = 枢纽节点.网络的度分布揭示了其结构.社交网络遵循电力规律 (少数枢纽,许多叶子节点).随机图表具有波森分布式的度数.
 
@@ -480,6 +480,18 @@ H^{(l+1)} = \sigma\left(\hat{D}^{-1/2} \hat{A} \hat{D}^{-1/2} H^{(l)} W^{(l)}\ri
 4. **Build a 2-layer message passing network.**运行两个重量矩阵的消息,显示在2轮之后,每个节点都从其2跳邻里得到信息.
 
 5. **Analyze a real-world graph.**使用卡拉特俱乐部图 (34节点,78边缘).计算程度分布,拉普拉斯人自值和光谱集群.将光谱集群结果与已知地面真理分区进行比较.
+
+### 暗示
+
+**Exercise 1.**使用从练习中所述公式.一个没有出口边缘的节点必须与所有节点平等地分享其分数,或者总数降低到1.检查每个步骤后的分数总计到1 ,并将结果与`pagerank(graph)`现在,我们要去.
+
+**Exercise 2.**建立两个小伙子`add_edge`连接它们一个边缘,然后打电话`spectral_clustering(graph, k=2)`检查每个点击得到一个标签. 当你添加横边,打印第二最小的自值`laplacian()`随着两组的结合而增长.
+
+**Exercise 3.**保持优先排列`heapq`按每一个重量为1,检查每个Djkstra距离是否等于该节点的BFS层`bfs(graph, start)`现在,我们要去.
+
+**Exercise 4.**使用身份矩阵为`features`按此,每个列标记一个节点,并应用`message_passing`然后在节点的行中输入的非零$v$显示哪些节点达到$v$首先比较距离宽度2的节点.
+
+**Exercise 5.** `networkx.karate_club_graph()`给了结点属性中的边缘列表和底部真相`club`复制边缘成一个`Graph`检查它是否有34个节点和78个边缘.`spectral_clustering`随着`club`它们的值,并允许交换两个标签名称.
 
 ## 关键词
 

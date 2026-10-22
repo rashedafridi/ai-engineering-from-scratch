@@ -53,7 +53,7 @@ Step 10000: Expected distance from origin ~ 100 (sqrt(10000))
 
 **In 2D**走上,下,左,右,等等的概率.$\sqrt{n}$距离从原点的距离. 路径追踪一个类似碎片的模式.
 
-**Why $\sqrt{n}$?**每一步都是+1或-1的等等概率.$n$步骤,位置$S_n = X_1 + X_2 + \cdots + X_n$在哪里$X_i$是$\pm 1$每一步的差异是1,并且步骤是独立的,所以$\operatorname{Var}(S_n) = n$标准偏差 = $\sqrt{n}$根据中央极限定理,$S_n / \sqrt{n}$转移到标准正常分布.
+**Why $\sqrt{n}$?**每一步都是+1或-1的等等概率.$n$步骤,位置$S_n = X_1 + X_2 + \cdots + X_n$在哪里$X_i$是$\pm 1$每一步的差异是1,并且步骤是独立的,所以$\mathop{\mathrm{Var}}(S_n) = n$标准偏差 = $\sqrt{n}$根据中央极限定理,$S_n / \sqrt{n}$转移到标准正常分布.
 
 这里$\sqrt{n}$标量显示在 ML 中各处. SGD噪音尺度为1/sqrt(批量_尺寸). 嵌入尺寸尺度为$\sqrt{d}$平方根是独立随机加量的签名.
 
@@ -436,6 +436,18 @@ p_\theta(x_{t-1} \mid x_t) = \mathcal{N}\left(x_{t-1}; \mu_\theta(x_t, t), \sigm
 4. **Compare Langevin dynamics at different temperatures.**采样来自双井潜力$U(x) = (x^2 - 1)^2$在低温下,样品集成在一个井.在高温下,它们在两处都传播.找到连锁在井之间混合的关键温度.
 
 5. **Implement the forward diffusion process.**开始使用1维信号 (例如,鼻波).通过线性噪音时间表逐步增加噪音100步以上. 显示信号如何降低到纯噪音. 然后实施一个简单的指标,扭转这个过程 (即使是简单的,只会减去估计的噪音).
+
+### 暗示
+
+**Exercise 1.**电话`random_walk_1d(10000, seed=i)`检查平均值接近0;标准偏差接近100;最后位置约有68%在 -100到100之间.
+
+**Exercise 2.**计算每个单词对,然后把每个行分为其总数,使每个行加起来为1. 传输矩阵到`MarkovChain(transition_matrix, state_names)`打电话`simulate`检查你输出中的每一对单词都在体内出现.
+
+**Exercise 3.**接受一个更糟糕的点,有可能性.$\exp(-\Delta / T)$并且乘以$T$测试一个你知道的最小值的函数,然后检查你的答案与一个细节的网格搜索.
+
+**Exercise 4.**梯度是$4x(x^2 - 1)$所以把它传给`langevin_dynamics(grad_U, x0, dt, temperature, n_steps)`门在$x = 0$号的高度为1,所以计算出标志的频率.$x$温度从0.05到1的变化,并寻找温度,
+
+**Exercise 5.**电话`diffusion_forward(signal, 100)`计算$\bar{\alpha}$作为产品的最后一步$(1 - \beta_t)$如果$\bar{\alpha}$信号还不是纯噪音,所以提高`beta_end`首先用真实的噪音测试你的标机.$(x_t - \sqrt{1 - \bar{\alpha}_t} \epsilon)/\sqrt{\bar{\alpha}_t}$必须回复原始信号.
 
 ## 关键词
 

@@ -141,7 +141,7 @@ Cov(X, Y) < 0:  when X increases, Y tends to decrease
 Cov(X, Y) = 0:  no linear co-movement
 ```
 
-为了$d$特性,共变矩阵$C$是一个$d \times d$矩阵$C[i][j] = \operatorname{Cov}(\text{feature}_i, \text{feature}_j)$斜面的输入$C[i][i]$它们的不同性.
+为了$d$特性,共变矩阵$C$是一个$d \times d$矩阵$C[i][j] = \mathop{\mathrm{Cov}}(\text{feature}_i, \text{feature}_j)$斜面的输入$C[i][i]$它们的不同性.
 
 ```
 C = | Var(x1)      Cov(x1,x2)  Cov(x1,x3) |

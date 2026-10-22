@@ -55,7 +55,7 @@ graph LR
 & \quad \Sigma \text{ is } m \times n, \text{ diagonal (singular values on the diagonal)} \\
 & \quad V \text{ is } n \times n, \text{ orthogonal } (V^T V = I) \\[6pt]
 & \text{The singular values } \sigma_1 \ge \sigma_2 \ge \cdots \ge \sigma_r > 0 \\
-& \text{where } r = \operatorname{rank}(A)
+& \text{where } r = \mathop{\mathrm{rank}}(A)
 \end{aligned}
 ```
 
@@ -147,7 +147,7 @@ So:
 & \quad \Sigma_k \text{ is } k \times k \quad \text{(top-left } k \times k \text{ block of } \Sigma\text{)} \\
 & \quad V_k \text{ is } n \times k \quad \text{(first } k \text{ columns of } V\text{)} \\[6pt]
 & \text{Approximation error} = \sigma_{k+1} \quad \text{(in spectral norm)} \\
-& \phantom{\text{Approximation error}} = \sqrt{\sigma_{k+1}^2 + \cdots + \sigma_r^2} \quad \text{(in Frobenius norm)}
+& \text{Approximation error} = \sqrt{\sigma_{k+1}^2 + \cdots + \sigma_r^2} \quad \text{(in Frobenius norm)}
 \end{aligned}
 ```
 
@@ -519,6 +519,18 @@ julia svd.jl
 4. 创建一个100x50的文档术语矩阵,包含3个合成主题.每个主题都有5个相关的术语.添加噪音.应用SVD并验证前3个单一值比其余值大得多.将文档项目进入3D隐形空间,并检查来自同一主题集群的文档.
 
 5. 产生一个清洁的低级矩阵 (级别3,尺寸50x40) 并在不同水平增加高斯噪音 ($\sigma$对于每个噪音水平,通过扫描查找最佳的切断级别.$k$测量清洁矩阵的重建错误.$k$噪音水平的变化.
+
+### 暗示
+
+**Exercise 1.**计算$A^T A$得到其本值和本向量`np.linalg.eigh`单个值是本值的平方根; 检查$U \Sigma V^T$修建$A$并且将错误与`svd_from_scratch`其他`np.linalg.svd`现在,我们要去.
+
+**Exercise 2.**电话`truncated_svd`对于每个级别,重建图像`reconstruct`,使用`compression_ratio(m, n, k)`随着排列的增长,相对错误必须下降,
+
+**Exercise 3.**填写列中值,然后重建一个3级近似的`truncated_svd`其他`reconstruct`测量结果:计算在评级范围之外的预测,并在已知细胞中打印最大的变化.一个3级近似不能保证任何属性,所以如果需要有效的评级,则将预测缩小到范围.
+
+**Exercise 4.**给每个主题一个包含5个词的区块,其文件的数量很高,然后添加小噪音.打印单一值:第3个必须比第4个大得多.然后按主题染色3D坐标,并检查每个主题是否形成一个组.
+
+**Exercise 5.**让清洁矩阵成50x3和3x40随机矩阵的产量,然后为每一个添加噪音$\sigma$对于每一个$k$们的位$k$通过清洁的矩阵进行重建; 期望最好的$k$低噪音的3点,高噪音的3点较小.
 
 ## 关键词
 

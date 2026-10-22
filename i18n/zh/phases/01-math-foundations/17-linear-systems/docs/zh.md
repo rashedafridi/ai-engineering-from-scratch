@@ -219,7 +219,7 @@ L[i][j] = (A[i][j] - sum(L[i][k]*L[j][k] for k < j)) / L[j][j]    for i > j
 - 曲函数的Hessian最小值是对称正确的.
 - $A^T A$总是对称正半确的.
 
-在高斯过程中,你将内核矩阵纳入$K$让我和乔莱斯基一起解决问题$K \alpha = y$查莱斯基因数也给出了边际概率的日志决定因素:$\log \det(K) = 2 \sum \log(\operatorname{diag}(L))$现在,我们要去.
+在高斯过程中,你将内核矩阵纳入$K$让我和乔莱斯基一起解决问题$K \alpha = y$查莱斯基因数也给出了边际概率的日志决定因素:$\log \det(K) = 2 \sum \log(\mathop{\mathrm{diag}}(L))$现在,我们要去.
 
 ### 最小的正方形:当Ax = b没有确切的解决方案时
 
@@ -385,7 +385,7 @@ CG用于:
 
 **Ridge regression.**增加$\lambda I$为了$X^T X$规律化系统$(X^T X + \lambda I) w = X^T y$通过Cholesky来解决问题,因为$X^T X + \lambda I$是对称正确的定义$\lambda > 0$现在,我们要去.
 
-**Gaussian processes.**预测平均值需要解决$K \alpha = y$在哪里$K$它们是核矩阵.$K$实际上,在一个数据库中,$\log \det(K) = 2 \sum \log(\operatorname{diag}(L))$现在,我们要去.
+**Gaussian processes.**预测平均值需要解决$K \alpha = y$在哪里$K$它们是核矩阵.$K$实际上,在一个数据库中,$\log \det(K) = 2 \sum \log(\mathop{\mathrm{diag}}(L))$现在,我们要去.
 
 **Neural network initialization.**纵向初始化使用QR分解来创建一个重量矩阵,其列是正规的.这可以防止深度网络中信号崩.
 
@@ -559,6 +559,18 @@ print(f"Ridge weights (sklearn): {ridge_sk.coef_}")
 4. 运用对100×100随机对称正确的矩阵的结合梯度算法.计算到容量1e-8的结合需要多少次代.$n$它们的重复.
 
 5. 时间你的Cholesky解决器与你的LU解决器`np.linalg.solve`通过对称正确的定数矩阵进行测试,大小为 10, 50, 200, 500. 绘制结果.
+
+### 暗示
+
+**Exercise 1.**电话`gaussian_elimination(A, b)`现在`lu_decompose(A)`接着是`lu_solve(P, L, U, b)`现在`np.linalg.solve(A, b)`检查每一个答案`np.allclose(A @ x, b)`现在,我们可以将这三个答案与`np.allclose`现在,我们要去.
+
+**Exercise 2.**使用`least_squares_normal`对于正常方程和其他方法的三个NumPy函数.`w_true`比较`condition_number(X.T @ X)`随着`condition_number(X)`首先是二次的方体,所以正常方程失去了最精确的.
+
+**Exercise 3.**预计上面的条件号码$10^{9}$解决问题`np.linalg.solve`子`ridge_regression(A, b, 0.01)`然后比较`np.linalg.norm(x)`两种残留物都可能很小,但没有规律化的溶液通常具有非常大的输入.
+
+**Exercise 4.**通过 `B @ B.T + n * np.eye(n)`并且每个自值都是正值的.`conjugate_gradient`检查最终残留标准是否低于1e-8,并且数量最高为100.
+
+**Exercise 5.**使用相同的方法`B @ B.T + n * np.eye(n)`对于三个解决器和时间的矩阵,每个解决器都用`time.perf_counter`乔莱斯基需要大约一半的算法,所以比率在更大的尺寸上最清楚.
 
 ## 关键词
 

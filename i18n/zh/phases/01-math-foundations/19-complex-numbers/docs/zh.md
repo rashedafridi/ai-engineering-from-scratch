@@ -105,7 +105,7 @@ z = 0 + 4i  corresponds to the point (0, 4) on the imaginary axis
 \begin{aligned}
 z &= r (\cos\theta + i \sin\theta) \\[4pt]
 \text{where: } r &= |z| = \sqrt{a^2 + b^2} \quad \text{(magnitude, or modulus)} \\
-\theta &= \operatorname{atan2}(b, a) \quad \text{(phase, or argument)}
+\theta &= \mathop{\mathrm{atan2}}(b, a) \quad \text{(phase, or argument)}
 \end{aligned}
 ```
 
@@ -250,7 +250,7 @@ PE(pos, 2i+1) &= \cos\left(pos / 10000^{2i/d}\right)
 | Multiplication | $(ac-bd) + (ad+bc)i$ | Rotate and scale |
 | Conjugate | $a - bi$ | Reflect over real axis |
 | Magnitude | $\sqrt{a^2 + b^2}$ | Distance from origin |
-| Phase | $\operatorname{atan2}(b, a)$ | Angle from positive real axis |
+| Phase | $\mathop{\mathrm{atan2}}(b, a)$ | Angle from positive real axis |
 | Division | multiply by conjugate | Reverse rotation and rescale |
 | Power | $r^n e^{in\theta}$ | Rotate $n$ times, scale by $r^n$ |
 
@@ -440,6 +440,18 @@ freqs = np.fft.fftfreq(128, d=1/128)
 
 5. **Rotation matrix equivalence.**对于10个随机角度和10个随机点,验证复杂乘法与2x2旋转矩阵的矩阵向量乘法相同的结果.打印最大数值差异.
 
+### 暗示
+
+**Exercise 1.**扩大产品$i^2 = -1$通过乘以合并的$1 + 3i$检查产品`Complex(2, 3) * Complex(4, -1)`其他:`magnitude()`必须等于两个大小的乘法,`phase()`必须等于两个阶段的总和.
+
+**Exercise 2.**让你走进`euler(math.pi / 6)`并且乘以12次.在每一步,检查大小保持在1和角增加30度.最后点必须在1e-12的 (1,0) 范围内.
+
+**Exercise 3.**按时间点$t = n/32$打电话`dft`只有看0到15的桶,因为上半是镜像.$k$对于一个宽度的阴影$A$是$AN/2$预计在bin3上约16个,在bin7上约8个.
+
+**Exercise 4.**电话`roots_of_unity(8)`然后加根:总数的大小必须接近0. 分开每个根与前一个根,检查每个结果都等于`euler(2 * math.pi / 8)`现在,我们要去.
+
+**Exercise 5.**转矩阵是 [[cos t, -sin t], [sin t, cos t]].对于每个角度和点,计算`euler(t) * Complex(x, y)`预计一个值接近 $10^{-15}$现在,我们要去.
+
 ## 关键词
 
 | Term | What it means |
@@ -448,7 +460,7 @@ freqs = np.fft.fftfreq(128, d=1/128)
 | Imaginary unit | The number $i$, defined by $i^2 = -1$. Not imaginary in the philosophical sense -- it is a rotation operator |
 | Complex plane | The 2D plane where the x-axis is real and the y-axis is imaginary. Also called the Argand plane |
 | Magnitude (modulus) | The distance from the origin: $\sqrt{a^2 + b^2}$. Written as $\lvert z \rvert$ |
-| Phase (argument) | The angle from the positive real axis: $\operatorname{atan2}(b, a)$. Written as $\arg(z)$ |
+| Phase (argument) | The angle from the positive real axis: $\mathop{\mathrm{atan2}}(b, a)$. Written as $\arg(z)$ |
 | Conjugate | The mirror image across the real axis: conjugate of $a + bi$ is $a - bi$ |
 | Polar form | Expressing $z$ as $r e^{i\theta}$ instead of $a + bi$. Makes multiplication easy |
 | Euler's formula | $e^{i\theta} = \cos\theta + i \sin\theta$. Connects exponentials to trigonometry |
