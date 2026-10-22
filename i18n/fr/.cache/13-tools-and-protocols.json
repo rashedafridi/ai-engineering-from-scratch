@@ -29,5 +29,19 @@
   "phases/13-tools-and-protocols/28-mcp-tool-contracts-and-content/docs/en.md": "713a0c2c7a28774c61b59756221528c57dbae1361521967d95ac7647a98f7864",
   "phases/13-tools-and-protocols/29-mcp-reliability-cancellation-and-flow-control/docs/en.md": "50f4b4cf4a382debc911c7f769cb3699bf0f54f4789bf19b9418635097be25df",
   "phases/13-tools-and-protocols/30-mcp-registry-supply-chain-and-drift/docs/en.md": "734698d661d450db141c54509144cf914443f3b335e4b18a14d175bad520d60b",
-  "phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations/docs/en.md": "fa7b16e90177a54f5ee0adb5c8a0d471a454074dda0ba277dc93b0e6abe28d57"
+  "phases/13-tools-and-protocols/31-mcp-conformance-versioning-and-operations/docs/en.md": "fa7b16e90177a54f5ee0adb5c8a0d471a454074dda0ba277dc93b0e6abe28d57",
+  "phases/13-tools-and-protocols/32-program-anatomy-elf-from-scratch/docs/en.md": "d293757ec62c29c7168e5e48405a7b8724a95132fe2532a943f1e4de1748500e",
+  "phases/13-tools-and-protocols/33-disassembly-and-control-flow/docs/en.md": "b8b7a529b3047ed1e98dbe5fac83a0015a47ad12883fc55973bddcfc3c109c51",
+  "phases/13-tools-and-protocols/34-lifting-to-pseudocode/docs/en.md": "47e548c6de9b0f2138486cd0c4b7a81e36a9b73d2b5d68b31d2a87d5ea8d312c",
+  "phases/13-tools-and-protocols/35-evidence-confidence-and-unknowns/docs/en.md": "16f3f007c9eb483fb9a3029b550acf1e36b9b6426572624038bfc79396cb9fe3",
+  "phases/13-tools-and-protocols/36-rebuild-and-prove-equal/docs/en.md": "2b3afd9c4fa887b15bcd18626774da3d04f2fbc83d3d336d1a670fe9b232b3e7",
+  "phases/13-tools-and-protocols/37-the-reverse-engineering-landscape/docs/en.md": "f53c1e8602ebd64bf1a44c80bc08e2f48fc3bf1eb715bec68affc14602332a44",
+  "phases/13-tools-and-protocols/38-calling-conventions-and-stack-frames/docs/en.md": "7de7231f86063ee8f2a9ecbd7bab20ae18a28863d5555437777a0de547983deb",
+  "phases/13-tools-and-protocols/39-compiler-idioms-and-optimization/docs/en.md": "9a128279f8aafc167912d8d82e11579d15a9af5fc6eac78c4ab076a759b4b245",
+  "phases/13-tools-and-protocols/40-linking-loading-and-stripped-binaries/docs/en.md": "f2d55ea6bcd09be875a881b60e9c644d484629dbed99f939ae3bbf91a4f0689e",
+  "phases/13-tools-and-protocols/41-recovering-data-and-types/docs/en.md": "f0f18a349d043439fda3162109319c8dc9ad40b2139809ae388d794001775797",
+  "phases/13-tools-and-protocols/42-dynamic-analysis-of-your-own-program/docs/en.md": "d769b2a28273558b3d1116c4f0ff0acb4017f0563a7cf80aa2a2c1c09f47298e",
+  "phases/13-tools-and-protocols/43-bytecode-and-managed-formats/docs/en.md": "243b7ceaa5937a57f2394c2d782665f269fea71ee77136a8d502eef38618b999",
+  "phases/13-tools-and-protocols/44-binary-diffing-and-symbolic-execution/docs/en.md": "43f7d2f24296423d771d3ea04c052277bbce603115b759886207713b619714f6",
+  "phases/13-tools-and-protocols/45-ai-assisted-reverse-engineering/docs/en.md": "4ec0a4eaa8d80ad1b8364289b8627752ba888cb57c892a207e2022fee67b501e"
 }
