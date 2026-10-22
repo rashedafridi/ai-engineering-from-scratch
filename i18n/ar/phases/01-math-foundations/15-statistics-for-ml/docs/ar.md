@@ -141,7 +141,7 @@ Cov(X, Y) < 0:  when X increases, Y tends to decrease
 Cov(X, Y) = 0:  no linear co-movement
 ```
 
-لأجل$d$الميزات، المصفوفة التغيرات $C$هو$d \times d$المصفوفة حيث $C[i][j] = \operatorname{Cov}(\text{feature}_i, \text{feature}_j)$. إدخالات الأفقية$C[i][i]$هي اختلافات كل سمة.
+لأجل$d$الميزات، المصفوفة التغيرات $C$هو$d \times d$المصفوفة حيث $C[i][j] = \mathop{\mathrm{Cov}}(\text{feature}_i, \text{feature}_j)$. إدخالات الأفقية$C[i][i]$هي اختلافات كل سمة.
 
 ```
 C = | Var(x1)      Cov(x1,x2)  Cov(x1,x3) |

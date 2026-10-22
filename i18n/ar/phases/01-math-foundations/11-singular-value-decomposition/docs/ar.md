@@ -55,7 +55,7 @@ graph LR
 & \quad \Sigma \text{ is } m \times n, \text{ diagonal (singular values on the diagonal)} \\
 & \quad V \text{ is } n \times n, \text{ orthogonal } (V^T V = I) \\[6pt]
 & \text{The singular values } \sigma_1 \ge \sigma_2 \ge \cdots \ge \sigma_r > 0 \\
-& \text{where } r = \operatorname{rank}(A)
+& \text{where } r = \mathop{\mathrm{rank}}(A)
 \end{aligned}
 ```
 
@@ -147,7 +147,7 @@ So:
 & \quad \Sigma_k \text{ is } k \times k \quad \text{(top-left } k \times k \text{ block of } \Sigma\text{)} \\
 & \quad V_k \text{ is } n \times k \quad \text{(first } k \text{ columns of } V\text{)} \\[6pt]
 & \text{Approximation error} = \sigma_{k+1} \quad \text{(in spectral norm)} \\
-& \phantom{\text{Approximation error}} = \sqrt{\sigma_{k+1}^2 + \cdots + \sigma_r^2} \quad \text{(in Frobenius norm)}
+& \text{Approximation error} = \sqrt{\sigma_{k+1}^2 + \cdots + \sigma_r^2} \quad \text{(in Frobenius norm)}
 \end{aligned}
 ```
 
@@ -519,6 +519,18 @@ julia svd.jl
 4. قم بإنشاء ماتريكية 100 × 50 من المستندات المختلفة مع 3 مواضيع اصطناعية. لكل موضوع 5 مصطلحات مرتبطة. أضف الضوضاء. تطبيق SVD وتحقق من أن القيم الثلاثة الأولى من الفردية أكبر بكثير من البقية. مشروع المستندات في الفضاء الخاطئ 3D وتحقق من أن المستندات من نفس مجموعة الموضوع معا.
 
 5. إنشاء صفة منخفضة صفوف (صفوف 3، حجم 50x40) وإضافة ضجيج غوسيان في مستويات مختلفة ($\sigma$= 0.1، 0.5، 1.0، 2.0) لكل مستوى ضجيج، العثور على المرتبة المثلى من التقطيع عن طريق مسح $k$من 1 إلى 40 و قياس خطأ إعادة الإعمار ضد المصفوفة النظيفة. رسم كيفية المثالي $k$تغيرات مع مستوى الضوضاء.
+
+### إشارات
+
+**Exercise 1.**الحساب$A^T A$، الحصول على قيمها الخاصة والمتجهات الخاصة مع `np.linalg.eigh`والقيم الفردية هي الجذور المربعة للقيم الخاصة، تحقق من ذلك$U \Sigma V^T$إعادة البناء$A$و مقارنة الخطأ مع`svd_from_scratch`و`np.linalg.svd`. . .
+
+**Exercise 2.**اتصل`truncated_svd`لكل صف، أعيد بناء الصورة`reconstruct`، واستخدامها`compression_ratio(m, n, k)`الخطأ النسبي يجب أن ينخفض مع نمو الصف، والصف الأول حيث لا ترى بلاك واضح هو الجواب.
+
+**Exercise 3.**قم بتسجيل الخلايا المفقودة، وملئها بمعدل الصف، ثم أعيد بناء مقربة من الصف 3 مع `truncated_svd`و`reconstruct`ثم قياس النتيجة: احتساب التنبؤات خارج نطاق التصنيف، وتطبيق أكبر تغيير في خلية معروفة. مقربة 3 رتبة لا تضمن أي من الممتلكات، لذلك قص التنبؤات إلى النطاق إذا كنت بحاجة إلى تصنيفات صالحة.
+
+**Exercise 4.**أعط كل موضوع كتلة من 5 تعبيرات مع أعداد عالية لمستنداته ، ثم أضف ضجيجًا صغيرًا. طبع القيم الفردية: يجب أن تكون 3 الأولى أكبر بكثير من 4 . ثم ألون إحداثيات 3D حسب الموضوع وتحقق من أن كل موضوع يشكل مجموعة واحدة.
+
+**Exercise 5.**قم بتحويل المصفوفة النظيفة إلى نسبة 50x3 و 3x40 المصفوفة عشوائية، ثم أضف الضجيج لكل منها $\sigma$لكل واحد$k$، مقارنة الرتب$k$إعادة بناء مع المصفوفة النظيفة ، توقع أفضل $k$قرب 3 لضوضاء منخفضة وأصغر لضوضاء عالية.
 
 ## الشروط الرئيسية
 
