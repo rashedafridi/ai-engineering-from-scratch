@@ -52,8 +52,8 @@ Diğer her şey (öğrenme oranı programı, veri karışımı, parti boyutu, ba
 
 LayerNorm ortalamayı çıkarır, std, ölçekler ve değişimler ile bölür. RMSNorm sadece ölçeği tutar:
 
-```
-RMSNorm(x) = x / sqrt(mean(x^2) + eps) * gamma
+```math
+\mathop{\mathrm{RMSNorm}}(x) = \frac{x}{\sqrt{\mathop{\mathrm{mean}}(x^2) + \epsilon}} \cdot \gamma
 ```
 
 Bir tane daha az matmul. Zhang ve Sennrich (2019) makine çevirisi üzerinde LayerNorm'a eşleştiğini ve %10 daha hızlı olduğunu savundu.
@@ -78,8 +78,8 @@ Her Llama, Mistral, Qwen, DeepSeek ve Gemma RoPE kullanır. Gemma 2 bir hibrid k
 
 GPT-2'nin MLP'si `x -> gelu(xW1 + b1) -> (...)W2 + b2`SwiGLU (Shazeer 2020) aktivasyonu kapalı bir ürünle değiştirir:
 
-```
-SwiGLU(x) = (xW1) * sigmoid(xW1) * xV
+```math
+\mathop{\mathrm{SwiGLU}}(x) = (xW_1) \cdot \mathop{\mathrm{sigmoid}}(xW_1) \cdot xV
 ```
 
 Bir yerine paralel olarak iki projeksiyon, Swish etkinleştirmesi ile kapalıdır. Parametre başına karmaşıklığa karşı empiri olarak daha güçlü. Llama 2 onu kabul etti, herkes takip etti. MLP'nin gizli boyutu genellikle toplam parametre sayısının orijinal yoğun MLP'ye eşleşmesi için ayarlanır: eğer GPT-2 kullanıldı `ff_dim = 4 * hidden`, SwiGLU kullanıyor `ff_dim = (2/3) * 4 * hidden = 8/3 * hidden`- Evet .
@@ -90,7 +90,7 @@ GPT-2 kullanıldı **Multi-Head Attention (MHA)**Her başın kendi Q, K, V proje
 
 **Multi-Query Attention (MQA, Shazeer 2019)**KV önbelleğini num_heads ile keser, bu da tipik bir modelde 12x ila 32x azaldır.
 
-**Grouped-Query Attention (GQA, Ainslie et al. 2023)**orta nokta: Q başlarının G grupları bir K ve bir V paylaşır. Llama 3 8B 32 Q başı ve 8 KV başı ile GQA kullanır (G=8), bu nedenle KV önbelleği tam MHA ile karşılaştırıldığında 4 kat küçülür.
+**Grouped-Query Attention (GQA, Ainslie et al. 2023)**Orta nokta:$G$Q başlı gruplar bir K ve bir V'yi paylaşıyor. Llama 3 8B 32 Q başlı ve 8 KV başlı GQA kullanıyor ($G=8$), böylece KV önbelleği MHA'nın tam olarak karşılaştırıldığında 4 kat azalır.
 
 **Multi-Head Latent Attention (MLA, DeepSeek 2024)**K ve V'yi ortak bir düşük sıralama gizli bir hale sıkıştırır ve onları baş başına geri doğru yansıtır. Baş başına ifade gücünü korurken KV önbelleğini daha da azaltır. DeepSeek-V2 ve V3 uzun bağlamlı performansları için buna güveniyor.
 
@@ -226,7 +226,7 @@ kv_cache = 2 * num_kv_heads * head_dim * bytes_per_element
            * (full_layers * max_seq_len + sliding_layers * min(W, max_seq_len))
 ```
 
-Spark-X2.5 4B, her tam dikkat katmanı için üç kaydırıcı pencere katmanı (W = 512) kullanır: 9 tam ve 36'dan 27 kaydırıcı. 1M-token bağlamında, bu yaklaşık 38,7 GB (36 GiB) BF16'da bir dizi. Eğer tüm 36 katman tüm bağlamı önbelleğe alırsa 154.6 GB (144 GiB) olur. Tam katmanlar neredeyse tüm maliyeti taşır, bu nedenle uzun bağlamlı bir modelde tam katmanların kaydırıcı katmanların oranı ilk olarak okunması gereken sayıdır.
+Spark-X2.5 4B üç kaydırıcı pencere katmanı ($W = 512$Bu, BF16'da bir dizi için yaklaşık 38.7 GB (36 GiB) olan 1M-token bağlamında, eğer tüm 36 katman tam bağlamı önbelleğe kaydırırsa, 154.6 GB (144 GiB) olur. Tam katmanlar neredeyse tüm maliyeti taşır, bu nedenle tam katmanların kaydırıcı katman oranı uzun bağlamlı bir modelde ilk okunması gereken rakamdır.
 
 ### Her Model Kazanırken
 
@@ -296,7 +296,7 @@ Bu ders bize çok yararlı .`outputs/skill-open-model-picker.md`. Bir dağıtım
 | MoE | "Sparse experts" | Mixture of Experts: N MLPs per block, router picks top-k per token — huge total params, small active params |
 | Top-k routing | "Pick k experts per token" | The router computes a score per expert and activates the k highest — typical k is 2 (Mixtral) to 8 (DeepSeek) |
 | YaRN | "Stretch RoPE" | Yet another RoPE extension — interpolates rotary angles to extend context from 8k to 128k+ at inference time |
-| Sliding-window attention | "Don't attend to everything" | Each token attends only to the last W tokens — caps attention cost at O(W) per token, used in Gemma 2 and early Mistral |
+| Sliding-window attention | "Don't attend to everything" | Each token attends only to the last $W$ tokens — caps attention cost at $O(W)$ per token, used in Gemma 2 and early Mistral |
 | Active params | "What runs per token" | For MoE models, the parameter count that sees a forward pass per token (much smaller than total params) — governs per-token FLOPs |
 
 ## Daha Fazla Okumak
