@@ -105,7 +105,7 @@ Qualquer ponto no plano pode ser descrito pela sua distância da origem e o seu 
 \begin{aligned}
 z &= r (\cos\theta + i \sin\theta) \\[4pt]
 \text{where: } r &= |z| = \sqrt{a^2 + b^2} \quad \text{(magnitude, or modulus)} \\
-\theta &= \operatorname{atan2}(b, a) \quad \text{(phase, or argument)}
+\theta &= \mathop{\mathrm{atan2}}(b, a) \quad \text{(phase, or argument)}
 \end{aligned}
 ```
 
@@ -250,7 +250,7 @@ Os pares de pecados e cos são as partes reais e imaginárias de exponenciais co
 | Multiplication | $(ac-bd) + (ad+bc)i$ | Rotate and scale |
 | Conjugate | $a - bi$ | Reflect over real axis |
 | Magnitude | $\sqrt{a^2 + b^2}$ | Distance from origin |
-| Phase | $\operatorname{atan2}(b, a)$ | Angle from positive real axis |
+| Phase | $\mathop{\mathrm{atan2}}(b, a)$ | Angle from positive real axis |
 | Division | multiply by conjugate | Reverse rotation and rescale |
 | Power | $r^n e^{in\theta}$ | Rotate $n$ times, scale by $r^n$ |
 
@@ -440,6 +440,18 @@ Corra .`code/complex_numbers.py`para gerar `outputs/skill-complex-arithmetic.md`
 
 5. **Rotation matrix equivalence.**Para 10 ângulos aleatórios e 10 pontos aleatórios, verifique se a multiplicação complexa dá o mesmo resultado que a multiplicação de matriz-vector com a matriz de rotação 2x2.
 
+### Indicios
+
+**Exercise 1.**Expandir o produto com $i^2 = -1$, então divide multiplicando o topo e o fundo pelo conjugado $1 + 3i$Verifique o produto com`Complex(2, 3) * Complex(4, -1)`O seu`magnitude()`Deve ser igual ao produto das duas magnitudes, e o seu`phase()`deve ser igual à soma das duas fases.
+
+**Exercise 2.**Faça o passo com `euler(math.pi / 6)`Em cada etapa, verifique se a magnitude permanece 1 e que o ângulo cresce em 30 graus.
+
+**Exercise 3.**Faça os pontos de tempo com $t = n/32$e ligar .`dft`Olhe apenas para os canhões 0 a 15, porque a metade superior é uma imagem espelhada.$k$para um seno de amplitude $A$É o que é$AN/2$, então espere cerca de 16 no bin 3 e cerca de 8 no bin 7.
+
+**Exercise 4.**Liga-me .`roots_of_unity(8)`E adicionar as raízes: a magnitude da soma deve ser próxima de 0. Divida cada raiz pela raiz anterior e verifique se cada resultado é igual `euler(2 * math.pi / 8)`- Não .
+
+**Exercise 5.**A matriz de rotação é [[cos t, -sin t], [sin t, cos t]]. Para cada ângulo e ponto, calcular `euler(t) * Complex(x, y)`e o produto da matriz, então registar a maior diferença absoluta.$10^{-15}$- Não .
+
 ## Termos-chave
 
 | Term | What it means |
@@ -448,7 +460,7 @@ Corra .`code/complex_numbers.py`para gerar `outputs/skill-complex-arithmetic.md`
 | Imaginary unit | The number $i$, defined by $i^2 = -1$. Not imaginary in the philosophical sense -- it is a rotation operator |
 | Complex plane | The 2D plane where the x-axis is real and the y-axis is imaginary. Also called the Argand plane |
 | Magnitude (modulus) | The distance from the origin: $\sqrt{a^2 + b^2}$. Written as $\lvert z \rvert$ |
-| Phase (argument) | The angle from the positive real axis: $\operatorname{atan2}(b, a)$. Written as $\arg(z)$ |
+| Phase (argument) | The angle from the positive real axis: $\mathop{\mathrm{atan2}}(b, a)$. Written as $\arg(z)$ |
 | Conjugate | The mirror image across the real axis: conjugate of $a + bi$ is $a - bi$ |
 | Polar form | Expressing $z$ as $r e^{i\theta}$ instead of $a + bi$. Makes multiplication easy |
 | Euler's formula | $e^{i\theta} = \cos\theta + i \sin\theta$. Connects exponentials to trigonometry |

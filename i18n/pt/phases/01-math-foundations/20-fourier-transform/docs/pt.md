@@ -113,8 +113,8 @@ O **phase spectrum**É o que é$\angle X[k]$Para a maioria das tarefas de análi
 
 ```math
 \begin{aligned}
-\text{Power at frequency } k: \quad P[k] &= |X[k]|^2 = \operatorname{Re}(X[k])^2 + \operatorname{Im}(X[k])^2 \\
-\text{Phase at frequency } k: \quad \phi[k] &= \operatorname{atan2}(\operatorname{Im}(X[k]), \operatorname{Re}(X[k]))
+\text{Power at frequency } k: \quad P[k] &= |X[k]|^2 = \mathop{\mathrm{Re}}(X[k])^2 + \mathop{\mathrm{Im}}(X[k])^2 \\
+\text{Phase at frequency } k: \quad \phi[k] &= \mathop{\mathrm{atan2}}(\mathop{\mathrm{Im}}(X[k]), \mathop{\mathrm{Re}}(X[k]))
 \end{aligned}
 ```
 
@@ -439,6 +439,18 @@ Corra .`code/fourier.py`para gerar `outputs/prompt-spectral-analyzer.md`- Não .
 4. **Windowing effects.**Crie um sinal que seja a soma de duas ondas sinusais a 10 Hz e 12 Hz (muito perto). Mostre a 128 Hz por 1 segundo. Calcule o espectro de potência sem janela, janela Hann e janela Hamming. Qual janela torna mais fácil distinguir os dois picos? Por quê?
 
 5. **Positional encoding analysis.**Gerar as codificações posicionais sinusoidais para d_modelo = 128 e max_pos = 512. Para cada par de posições $(p_1, p_2)$, calcular o produto de pontos de suas codificações. Mostrar que o produto de pontos depende apenas de$\lvert p_1 - p_2 \rvert$O que acontece com o produto de pontos à medida que a distância aumenta?
+
+### Indicios
+
+**Exercise 1.**Com 128 amostras em 1 segundo, bin $k$É o que é$k$Hz, então para uma frequência inteira o índice do maior valor em canhões 1 a 63 é a frequência.`generate_signal`E ...`magnitude_spectrum`Depois de adicionar ruído, verifique se o pico está no mesmo lixo enquanto os outros sacos subem.
+
+**Exercise 2.**Use uma potência de dois comprimentos, porque `fft`Divide o sinal em duas partes.`max(abs(a - b))`A taxa de tempo deve aumentar aproximadamente a$N / \log_2 N$- Não .
+
+**Exercise 3.**Para a convolução circular, calcular $y[n] = \sum_k h[k] x[(n-k) \bmod 8]$- por mão$n$= 0, 1 e 2, e comparar os três primeiros valores de `convolve_direct`E ...`convolve_fft`A convulsão linear tem comprimento 4 + 3 - 1 = 6, por isso verifique primeiro se o comprimento 8 já é longo o suficiente.
+
+**Exercise 4.**Utilização`hann_window`- Não .`hamming_window`- Não .`apply_window`, e `power_spectrum`, e contar os picos separados entre 9 e 13 Hz. Tanto 10 Hz quanto 12 Hz completam ciclos inteiros em 1 segundo, de modo que nenhuma janela pode parecer melhor. Repita com 10,5 Hz e 12,5 Hz para ver o vazamento que as janelas reduzem.
+
+**Exercise 5.**Calcule cada codificação com `positional_encoding(pos, 128)`. Compare o produto ponto para posições (0, 10) com o produto ponto para (100, 110): os dois valores devem corresponder a cerca de 1e-10.$\lvert p_1 - p_2 \rvert$Para um fixo$p_1$- Não .
 
 ## Termos-chave
 

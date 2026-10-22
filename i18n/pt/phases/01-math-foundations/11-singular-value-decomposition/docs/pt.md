@@ -55,7 +55,7 @@ Para uma matriz $A$com forma$m \times n$- Não .
 & \quad \Sigma \text{ is } m \times n, \text{ diagonal (singular values on the diagonal)} \\
 & \quad V \text{ is } n \times n, \text{ orthogonal } (V^T V = I) \\[6pt]
 & \text{The singular values } \sigma_1 \ge \sigma_2 \ge \cdots \ge \sigma_r > 0 \\
-& \text{where } r = \operatorname{rank}(A)
+& \text{where } r = \mathop{\mathrm{rank}}(A)
 \end{aligned}
 ```
 
@@ -147,7 +147,7 @@ O teorema de Eckart-Young-Mirsky afirma que os melhores$\text{rank-}k$aproximaç
 & \quad \Sigma_k \text{ is } k \times k \quad \text{(top-left } k \times k \text{ block of } \Sigma\text{)} \\
 & \quad V_k \text{ is } n \times k \quad \text{(first } k \text{ columns of } V\text{)} \\[6pt]
 & \text{Approximation error} = \sigma_{k+1} \quad \text{(in spectral norm)} \\
-& \phantom{\text{Approximation error}} = \sqrt{\sigma_{k+1}^2 + \cdots + \sigma_r^2} \quad \text{(in Frobenius norm)}
+& \text{Approximation error} = \sqrt{\sigma_{k+1}^2 + \cdots + \sigma_r^2} \quad \text{(in Frobenius norm)}
 \end{aligned}
 ```
 
@@ -519,6 +519,18 @@ Esta lição produz:
 4. Crie uma matriz de 100x50 documentos com 3 tópicos sintéticos. Cada tópico tem 5 termos associados. Adicione ruído. Aplique SVD e verifique que os 3 principais valores singulares são muito maiores do que os outros. Projete documentos no espaço latente 3D e verifique que os documentos do mesmo grupo de tópicos juntos.
 
 5. Gerar uma matriz limpa de baixo nível (rango 3, tamanho 50x40) e adicionar ruído gaussiano em diferentes níveis ($\sigma$Para cada nível de ruído, encontrar a classificação de truncamento ideal$k$A partir de 1 a 40 e a medição de erro de reconstrução contra a matriz limpa.$k$alterações com o nível de ruído.
+
+### Indicios
+
+**Exercise 1.**Computação$A^T A$, obter os seus próprios valores e próprios vetores com `np.linalg.eigh`Os valores singulares são as raízes quadradas dos valores próprios; verifique que$U \Sigma V^T$reconstruções $A$e comparar o erro com `svd_from_scratch`E ...`np.linalg.svd`- Não .
+
+**Exercise 2.**Liga-me .`truncated_svd`Para cada grau, reconstruir a imagem com `reconstruct`, e usar `compression_ratio(m, n, k)`O erro relativo deve cair à medida que a classificação cresce, e a primeira classificação onde não se vê blocos claros é a resposta.
+
+**Exercise 3.**Marque as células faltantes, preencha-as com a média de fila, e reconstruir uma aproximação de nível 3 com `truncated_svd`E ...`reconstruct`. Depois, medir o resultado: contar as previsões fora da faixa de classificação e imprimir a maior mudança em uma célula conhecida. Uma aproximação de nível 3 não garante nenhuma das propriedades, então clipe as previsões para a faixa se você precisar de classificações válidas.
+
+**Exercise 4.**Dê a cada tópico um bloco de 5 termos com grandes contagens para seus documentos, adicione pequeno ruído. Imprima os valores singulares: os primeiros 3 devem ser muito maiores que o 4. Coloque as coordenadas 3D por tópico e verifique se cada tópico forma um grupo.
+
+**Exercise 5.**Faça a matriz limpa como o produto de uma matriz aleatória 50x3 e 3x40, e adicione ruído para cada $\sigma$- Para cada um .$k$, comparar a classificação .$k$Reconstrução com a matriz limpa; esperar o melhor $k$cerca de 3 para baixo ruído e menor para alto ruído.
 
 ## Termos-chave
 

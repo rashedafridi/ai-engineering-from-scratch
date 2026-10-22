@@ -53,7 +53,7 @@ Step 10000: Expected distance from origin ~ 100 (sqrt(10000))
 
 **In 2D**, o andar vai para cima, para baixo, para a esquerda ou para a direita com igual probabilidade.$\sqrt{n}$A escalação se aplica à distância da origem.
 
-**Why $\sqrt{n}$?**Cada passo é +1 ou -1 com igual probabilidade.$n$Passo, posição.$S_n = X_1 + X_2 + \cdots + X_n$onde cada um $X_i$É o que é$\pm 1$A variância de cada passo é de 1, e os passos são independentes, então $\operatorname{Var}(S_n) = n$. Desvio padrão = $\sqrt{n}$Pelo teorema do limite central,$S_n / \sqrt{n}$converge para uma distribuição normal padrão.
+**Why $\sqrt{n}$?**Cada passo é +1 ou -1 com igual probabilidade.$n$Passo, posição.$S_n = X_1 + X_2 + \cdots + X_n$onde cada um $X_i$É o que é$\pm 1$A variância de cada passo é de 1, e os passos são independentes, então $\mathop{\mathrm{Var}}(S_n) = n$. Desvio padrão = $\sqrt{n}$Pelo teorema do limite central,$S_n / \sqrt{n}$converge para uma distribuição normal padrão.
 
 Isto .$\sqrt{n}$A escala de escala aparece em todas as escalas de ruído do ML.$\sqrt{d}$A raiz quadrada é a assinatura de adições aleatórias independentes.
 
@@ -436,6 +436,18 @@ A principal ideia sobre todas estas conexões: os processos estocásticos não s
 4. **Compare Langevin dynamics at different temperatures.**Amostra de um potencial de poço duplo $U(x) = (x^2 - 1)^2$A temperatura baixa, as amostras se agrupam num poço, a alta, se espalham por ambos os lados, encontrando a temperatura crítica onde a cadeia se mistura entre os poços.
 
 5. **Implement the forward diffusion process.**Comece com um sinal 1D (por exemplo, uma onda sinusal). Adicione ruído progressivamente em mais de 100 passos com um cronograma de ruído linear. Mostre como o sinal se degrada para ruído puro. Em seguida, implemente um denoizador simples que inverte o processo (mesmo um ingênuo que apenas subtrai o ruído estimado).
+
+### Indicios
+
+**Exercise 1.**Liga-me .`random_walk_1d(10000, seed=i)`Verifique se a média está perto de 0, o desvio padrão está perto de 100, e cerca de 68% das posições finais estão entre -100 e 100.
+
+**Exercise 2.**Conte cada par de palavras, depois divida cada linha pelo total para que cada linha somar até 1. Passe a matriz para `MarkovChain(transition_matrix, state_names)`e ligar .`simulate`Verifique se cada par de palavras na sua saída também aparece no corpus.
+
+**Exercise 3.**Aceita um ponto pior com probabilidade .$\exp(-\Delta / T)$e multiplicam .$T$Teste em uma função cujo mínimo você sabe, e verifique sua resposta contra uma busca de rede fina.
+
+**Exercise 4.**O gradiente é $4x(x^2 - 1)$, então passa isso para `langevin_dynamics(grad_U, x0, dt, temperature, n_steps)`A barreira no$x = 0$Tem altura 1, então conta com que frequência o sinal de$x$As alterações de temperatura de 0,05 a 1 e procurar a temperatura em que a contagem começa a aumentar rapidamente.
+
+**Exercise 5.**Liga-me .`diffusion_forward(signal, 100)`e computação .$\bar{\alpha}$O resultado da análise é o resultado da análise de dados.$(1 - \beta_t)$Se ...$\bar{\alpha}$Está longe de 0, o sinal ainda não é ruído puro, então eleve `beta_end`Teste o teu denoiser primeiro com o ruído verdadeiro .$(x_t - \sqrt{1 - \bar{\alpha}_t} \epsilon)/\sqrt{\bar{\alpha}_t}$Deve devolver o sinal original exactamente.
 
 ## Termos-chave
 
