@@ -105,7 +105,7 @@ z = 0 + 4i  corresponds to the point (0, 4) on the imaginary axis
 \begin{aligned}
 z &= r (\cos\theta + i \sin\theta) \\[4pt]
 \text{where: } r &= |z| = \sqrt{a^2 + b^2} \quad \text{(magnitude, or modulus)} \\
-\theta &= \operatorname{atan2}(b, a) \quad \text{(phase, or argument)}
+\theta &= \mathop{\mathrm{atan2}}(b, a) \quad \text{(phase, or argument)}
 \end{aligned}
 ```
 
@@ -250,7 +250,7 @@ PE(pos, 2i+1) &= \cos\left(pos / 10000^{2i/d}\right)
 | Multiplication | $(ac-bd) + (ad+bc)i$ | Rotate and scale |
 | Conjugate | $a - bi$ | Reflect over real axis |
 | Magnitude | $\sqrt{a^2 + b^2}$ | Distance from origin |
-| Phase | $\operatorname{atan2}(b, a)$ | Angle from positive real axis |
+| Phase | $\mathop{\mathrm{atan2}}(b, a)$ | Angle from positive real axis |
 | Division | multiply by conjugate | Reverse rotation and rescale |
 | Power | $r^n e^{in\theta}$ | Rotate $n$ times, scale by $r^n$ |
 
@@ -440,6 +440,18 @@ freqs = np.fft.fftfreq(128, d=1/128)
 
 5. **Rotation matrix equivalence.**10 यादृच्छिक कोणों और 10 यादृच्छिक बिंदुओं के लिए, यह सत्यापित करें कि जटिल गुणा 2x2 घूर्णन मैट्रिक्स के साथ मैट्रिक्स-वेक्टर गुणा के समान परिणाम देता है। अधिकतम संख्यात्मक अंतर प्रिंट करें।
 
+### संकेत
+
+**Exercise 1.** के साथ उत्पाद का विस्तार करें$i^2 = -1$, फिर उपरोक्त और नीचे के साथ जोड़कर विभाजित करें $1 + 3i$उत्पाद की जांच करें`Complex(2, 3) * Complex(4, -1)``magnitude()`दो परिमाणों के गुणक के बराबर होना चाहिए, और इसकी `phase()`दोनों चरणों का योग बराबर होना चाहिए।
+
+**Exercise 2.**`euler(math.pi / 6)`और 12 बार गुणा करें. प्रत्येक चरण में, जांचें कि परिमाण 1 रहता है और कोण 30 डिग्री बढ़ता है। अंतिम बिंदु (1, 0) के भीतर लगभग 1e-12 होना चाहिए।
+
+**Exercise 3.**समय बिंदुओं को $t = n/32$और कॉल`dft`. केवल 0 से 15 तक के डिब्बे को देखें, क्योंकि ऊपरी आधा एक दर्पण छवि है.$k$एक संदिग्धता के लिए$A$है $AN/2$, तो बाइन 3 पर लगभग 16 और बाइन 7 पर लगभग 8 की उम्मीद करें।
+
+**Exercise 4.**कॉल`roots_of_unity(8)`और जड़ें जोड़ेंः योग की मात्रा 0 के करीब होना चाहिए. प्रत्येक जड़ को पिछले जड़ से विभाजित करें और जांचें कि प्रत्येक परिणाम बराबर है।`euler(2 * math.pi / 8)`. .
+
+**Exercise 5.**घूर्णन मैट्रिक्स [[cos t, -sin t], [sin t, cos t] है। प्रत्येक कोण और बिंदु के लिए, गणना करें `euler(t) * Complex(x, y)`और मैट्रिक्स उत्पाद, तो रिकॉर्ड सबसे बड़ा निरपेक्ष अंतर। एक मूल्य के करीब उम्मीद $10^{-15}$. .
+
 ## प्रमुख शर्तें
 
 | Term | What it means |
@@ -448,7 +460,7 @@ freqs = np.fft.fftfreq(128, d=1/128)
 | Imaginary unit | The number $i$, defined by $i^2 = -1$. Not imaginary in the philosophical sense -- it is a rotation operator |
 | Complex plane | The 2D plane where the x-axis is real and the y-axis is imaginary. Also called the Argand plane |
 | Magnitude (modulus) | The distance from the origin: $\sqrt{a^2 + b^2}$. Written as $\lvert z \rvert$ |
-| Phase (argument) | The angle from the positive real axis: $\operatorname{atan2}(b, a)$. Written as $\arg(z)$ |
+| Phase (argument) | The angle from the positive real axis: $\mathop{\mathrm{atan2}}(b, a)$. Written as $\arg(z)$ |
 | Conjugate | The mirror image across the real axis: conjugate of $a + bi$ is $a - bi$ |
 | Polar form | Expressing $z$ as $r e^{i\theta}$ instead of $a + bi$. Makes multiplication easy |
 | Euler's formula | $e^{i\theta} = \cos\theta + i \sin\theta$. Connects exponentials to trigonometry |
