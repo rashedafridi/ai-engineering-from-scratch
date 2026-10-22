@@ -28,9 +28,11 @@
 
 گاو و همکارانش یک شکل عملکردی را ارائه می دهند.`d = sqrt(KL(pi || pi_init))`. بذار`R_proxy(d)`و به عنوان یک پاداش نماینده و`R_gold(d)`به معنای پاداش طلاست.
 
-```
-R_proxy(d) = alpha * d - beta_proxy * d^2
-R_gold(d)  = alpha * d - beta_gold  * d^2
+```math
+\begin{aligned}
+R_{\text{proxy}}(d) &= \alpha d - \beta_{\text{proxy}} d^2 \\
+R_{\text{gold}}(d) &= \alpha d - \beta_{\text{gold}} d^2
+\end{aligned}
 ```
 
 با`beta_gold > beta_proxy`هر دو از صفر KL بالا می روند هر دو اوج دارند، اوج طلا به اصل نزدیک تر است.`d`در این میان، نقره ای که در سطح طلا قرار دارد، در سطح طلا پایین تر از خط اصلی قرار دارد، حتی در حالی که پروکسی همچنان بالا می رود. شکاف پروکسی- طلا در میان نمونه گیری BoN، PPO و SFT به بهترین شکل نشان دهنده است.
