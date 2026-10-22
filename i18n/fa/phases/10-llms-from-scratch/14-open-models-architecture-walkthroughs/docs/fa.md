@@ -52,8 +52,8 @@
 
 LayerNorm میانگین را از دست می دهد، به std، مقیاس ها و تغییرات تقسیم می شود. RMSNorm فقط مقیاس را حفظ می کند:
 
-```
-RMSNorm(x) = x / sqrt(mean(x^2) + eps) * gamma
+```math
+\mathop{\mathrm{RMSNorm}}(x) = \frac{x}{\sqrt{\mathop{\mathrm{mean}}(x^2) + \epsilon}} \cdot \gamma
 ```
 
 هیچ معادلات معادل. هیچ تعصب. یک ماتمل کمتر در هر توکن. ژانگ و سنریچ (2019) استدلال کردند که با LayerNorm در ترجمه ماشین مطابقت دارد در حالی که 10٪ سریعتر است. هر مدل باز مدرن آن را اجرا می کند.
@@ -78,8 +78,8 @@ score = q_rotated . k_rotated
 
 MLP GPT-2`x -> gelu(xW1 + b1) -> (...)W2 + b2`SwiGLU (Shazeer 2020) فعال سازی را با یک محصول بسته جایگزین می کند:
 
-```
-SwiGLU(x) = (xW1) * sigmoid(xW1) * xV
+```math
+\mathop{\mathrm{SwiGLU}}(x) = (xW_1) \cdot \mathop{\mathrm{sigmoid}}(xW_1) \cdot xV
 ```
 
 دو طرح متوازی به جای یک، با فعال سازی سوئیس بسته شده است. به طور تجربی قوی تر در پیچیدگی هر پارامتر. Llama 2 آن را اتخاذ کرد، همه دنبال کردند. اندازه پنهان MLP معمولاً تنظیم می شود تا تعداد پارامتر کل با MLP کثیف اصلی مطابقت داشته باشد: اگر GPT-2 استفاده شد`ff_dim = 4 * hidden`, SwiGLU استفاده می کند`ff_dim = (2/3) * 4 * hidden = 8/3 * hidden`. .
@@ -90,7 +90,7 @@ GPT-2 استفاده شده**Multi-Head Attention (MHA)**: هر سر طرح Q، 
 
 **Multi-Query Attention (MQA, Shazeer 2019)**یک K و یک V را در تمام سرها تقسیم می کند. KV cache را با num_heads کاهش می دهد، که در یک مدل معمولی 12x تا 32x کاهش می یابد. دقت کمی در معیار های سخت کاهش می یابد.
 
-**Grouped-Query Attention (GQA, Ainslie et al. 2023)**در این حالت، G گروه های Q یک K و یک V را به اشتراک می گذارند. Llama 3 8B از GQA با 32 Q سر و 8 KV سر استفاده می کند (G=8), بنابراین KV cache 4x نسبت به MHA کامل کاهش می یابد.
+**Grouped-Query Attention (GQA, Ainslie et al. 2023)**. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .$G$گروه های Q heads یک K و یک V را به اشتراک می گذارند. Llama 3 8B GQA را با 32 Q head و 8 KV head ($G=8$), بنابراین KV cache 4x نسبت به MHA کامل کوچک می شود.
 
 **Multi-Head Latent Attention (MLA, DeepSeek 2024)**K و V را به یک خط پنهان مشترک پایین فشار می دهد و آنها را به سمت بالا به صورت سر باز می کند. علاوه بر این ، KV را به صورت پیش بینی کاهش می دهد و در عین حال بیانگرایی را در هر سر حفظ می کند. DeepSeek-V2 و V3 برای عملکرد طولانی مدت خود به این موضوع متکی هستند.
 
@@ -226,7 +226,7 @@ kv_cache = 2 * num_kv_heads * head_dim * bytes_per_element
            * (full_layers * max_seq_len + sliding_layers * min(W, max_seq_len))
 ```
 
-Spark-X2.5 4B سه لایه پنجره ای (W = 512) را برای هر لایه توجه کامل اجرا می کند: 9 کامل و 27 از 36 لایه ای. در زمینه 1M-توکن که حدود 38.7 GB (36 GiB) در هر تسلسل در BF16 است. اگر تمام ۳۶ لایه متن کامل را ذخیره کنند ۱۵۴٫۶ جی بی (۱۴۴ جی بی) خواهد بود. لایه های کامل تقریبا تمام هزینه را تحمل می کنند، به همین دلیل نسبت لایه های کامل به لایه های شیفتی اولین شماره ای است که در یک مدل طولانی متن خوانده می شود.
+Spark-X2.5 4B سه لایه پنجره ای را اجرا می کند ($W = 512$) برای هر لایه توجه کامل: 9 کامل و 27 پرتاب از 36. در زمینه 1M-توکن که حدود 38.7 GB (36 GiB) در هر ردیابی در BF16 است. اگر تمام 36 لایه به صورت کیش کامل را به صورت کامل به 154.6 GB (144 GiB) می رساند. لایه های کامل تقریبا تمام هزینه را تحمل می کنند، به همین دلیل نسبت لایه های کامل به لایه های پرتاب اولین شماره ای است که در یک مدل زمینه طولانی خوانده می شود.
 
 ### وقتی هر مدل برنده می شود
 
@@ -296,7 +296,7 @@ config = {
 | MoE | "Sparse experts" | Mixture of Experts: N MLPs per block, router picks top-k per token — huge total params, small active params |
 | Top-k routing | "Pick k experts per token" | The router computes a score per expert and activates the k highest — typical k is 2 (Mixtral) to 8 (DeepSeek) |
 | YaRN | "Stretch RoPE" | Yet another RoPE extension — interpolates rotary angles to extend context from 8k to 128k+ at inference time |
-| Sliding-window attention | "Don't attend to everything" | Each token attends only to the last W tokens — caps attention cost at O(W) per token, used in Gemma 2 and early Mistral |
+| Sliding-window attention | "Don't attend to everything" | Each token attends only to the last $W$ tokens — caps attention cost at $O(W)$ per token, used in Gemma 2 and early Mistral |
 | Active params | "What runs per token" | For MoE models, the parameter count that sees a forward pass per token (much smaller than total params) — governs per-token FLOPs |
 
 ## خواندن بیشتر
