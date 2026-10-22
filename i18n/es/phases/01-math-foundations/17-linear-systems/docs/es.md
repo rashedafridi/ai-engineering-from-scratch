@@ -219,7 +219,7 @@ Cholesky es dos veces más rápido que LU y requiere la mitad del almacenamiento
 - El Hessiano de una función convexa en un mínimo es simétrico positivo definido.
 - $A^T A$es siempre semi-definido positivo simétrico.
 
-En los procesos de Gaussian, se factorizan la matriz del núcleo $K$Con Cholesky, luego resuelva.$K \alpha = y$El factor Cholesky también le da el determinante de registro para la probabilidad marginal:$\log \det(K) = 2 \sum \log(\operatorname{diag}(L))$¿ Qué ?
+En los procesos de Gaussian, se factorizan la matriz del núcleo $K$Con Cholesky, luego resuelva.$K \alpha = y$El factor Cholesky también le da el determinante de registro para la probabilidad marginal:$\log \det(K) = 2 \sum \log(\mathop{\mathrm{diag}}(L))$¿ Qué ?
 
 ### Cuadrados mínimos: cuando Ax = b no tiene solución exacta
 
@@ -385,7 +385,7 @@ Cada método de esta lección aparece en ML de producción:
 
 **Ridge regression.**Añade$\lambda I$¿ Qué ?$X^T X$El sistema regularizado$(X^T X + \lambda I) w = X^T y$siempre es solucionable a través de Cholesky porque $X^T X + \lambda I$es simétrico positivo definido para $\lambda > 0$¿ Qué ?
 
-**Gaussian processes.**La media predictiva requiere una solución $K \alpha = y$donde$K$Es la matriz del núcleo.$K$El log de probabilidad marginal utiliza$\log \det(K) = 2 \sum \log(\operatorname{diag}(L))$¿ Qué ?
+**Gaussian processes.**La media predictiva requiere una solución $K \alpha = y$donde$K$Es la matriz del núcleo.$K$El log de probabilidad marginal utiliza$\log \det(K) = 2 \sum \log(\mathop{\mathrm{diag}}(L))$¿ Qué ?
 
 **Neural network initialization.**La inicialización ortogonal utiliza la descomposición QR para crear matrices de peso cuyas columnas son ortónormales. Esto evita el colapso de la señal en redes profundas.
 
@@ -559,6 +559,18 @@ Esta lección produce:
 4. Implemente el algoritmo de gradiente conjugado para una matriz definida positiva simétrica aleatoria de 100x100. Cuente cuántas iteraciones se necesitan para converger a la tolerancia 1e-8.$n$las iteraciones.
 
 5. Tiempo de su solvente Cholesky vs su solvente LU vs `np.linalg.solve`En las matrices definidas positivas simétricas de tamaño 10, 50, 200, 500.
+
+### Indicios
+
+**Exercise 1.**Llamé`gaussian_elimination(A, b)`, entonces`lu_decompose(A)`seguido por `lu_solve(P, L, U, b)`, entonces`np.linalg.solve(A, b)`- Compruebe cada respuesta con`np.allclose(A @ x, b)`y comparar las tres respuestas con `np.allclose`¿ Qué ?
+
+**Exercise 2.**Usar`least_squares_normal`Las respuestas deben ser cercanas a `w_true`- Comparar .`condition_number(X.T @ X)`con`condition_number(X)`: el primero es el cuadrado del segundo, por lo que las ecuaciones normales pierden la mayor precisión.
+
+**Exercise 3.**Espera un número de condición arriba $10^{9}$- Resolver con`np.linalg.solve`y con `ridge_regression(A, b, 0.01)`, luego comparar`np.linalg.norm(x)`Los residuos pueden ser pequeños, pero la solución sin regularización suele tener entradas muy grandes.
+
+**Exercise 4.**Haga una matriz positiva y definida simétrica con `B @ B.T + n * np.eye(n)`, para que cada valor propio sea positivo. Añadir un contador al bucle en su copia de `conjugate_gradient`, luego comprobar que la norma residual final es inferior a 1e-8 y que el recuento es como máximo 100.
+
+**Exercise 5.**Usar lo mismo `B @ B.T + n * np.eye(n)`matrices para los tres solventes y tiempo cada resolver con `time.perf_counter`Cholesky necesita aproximadamente la mitad de la aritmética de LU, por lo que la relación es más clara en los tamaños más grandes.
 
 ## Términos clave
 

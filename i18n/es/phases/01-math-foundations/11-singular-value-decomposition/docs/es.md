@@ -55,7 +55,7 @@ Para una matriz $A$con forma$m \times n$¿Qué es esto ?
 & \quad \Sigma \text{ is } m \times n, \text{ diagonal (singular values on the diagonal)} \\
 & \quad V \text{ is } n \times n, \text{ orthogonal } (V^T V = I) \\[6pt]
 & \text{The singular values } \sigma_1 \ge \sigma_2 \ge \cdots \ge \sigma_r > 0 \\
-& \text{where } r = \operatorname{rank}(A)
+& \text{where } r = \mathop{\mathrm{rank}}(A)
 \end{aligned}
 ```
 
@@ -147,7 +147,7 @@ El teorema de Eckart-Young-Mirsky afirma que los mejores$\text{rank-}k$Aproximac
 & \quad \Sigma_k \text{ is } k \times k \quad \text{(top-left } k \times k \text{ block of } \Sigma\text{)} \\
 & \quad V_k \text{ is } n \times k \quad \text{(first } k \text{ columns of } V\text{)} \\[6pt]
 & \text{Approximation error} = \sigma_{k+1} \quad \text{(in spectral norm)} \\
-& \phantom{\text{Approximation error}} = \sqrt{\sigma_{k+1}^2 + \cdots + \sigma_r^2} \quad \text{(in Frobenius norm)}
+& \text{Approximation error} = \sqrt{\sigma_{k+1}^2 + \cdots + \sigma_r^2} \quad \text{(in Frobenius norm)}
 \end{aligned}
 ```
 
@@ -519,6 +519,18 @@ Esta lección produce:
 4. Crea una matriz de 100x50 documentos con 3 temas sintéticos. Cada tema tiene 5 términos asociados. Agregue ruido. Aplique SVD y verifique que los tres valores singulares superiores son mucho más grandes que los demás. Proyecte documentos en el espacio latente 3D y compruebe que los documentos del mismo grupo de temas juntos.
 
 5. Generar una matriz limpia de bajo rango (rango 3, tamaño 50x40) y agregar el ruido gaussiano en diferentes niveles ($\sigma$Para cada nivel de ruido, encuentre el rango óptimo de truncamiento barriendo $k$de 1 a 40 y medir el error de reconstrucción con la matriz limpia.$k$cambios con el nivel de ruido.
+
+### Indicios
+
+**Exercise 1.**Computación$A^T A$, obtener sus valores propios y vectores propios con `np.linalg.eigh`Los valores singulares son las raíces cuadradas de los valores propios; compruebe que$U \Sigma V^T$reconstrucciones $A$y comparar el error con `svd_from_scratch`y `np.linalg.svd`¿ Qué ?
+
+**Exercise 2.**Llamé`truncated_svd`Para cada rango, reconstruye la imagen con `reconstruct`, y usar`compression_ratio(m, n, k)`El error relativo debe caer a medida que crece la fila, y la primera fila donde no se ven bloques claros es la respuesta.
+
+**Exercise 3.**Marque las células faltantes, llénalos con la media de fila, y luego reconstruya una aproximación de rango 3 con `truncated_svd`y `reconstruct`. Luego mide el resultado: cuenta las predicciones fuera del rango de calificación, e imprime el cambio más grande en una célula conocida. Una aproximación de rango 3 no garantiza ninguna de las propiedades, por lo que corta las predicciones al rango si necesitas calificaciones válidas.
+
+**Exercise 4.**Dar a cada tema un bloque de 5 términos con altos números para sus documentos, luego agregar un pequeño ruido. Imprimir los valores singulares: los primeros 3 deben ser mucho más grandes que el 4. Luego colorear las coordenadas 3D por tema y comprobar que cada tema forma un grupo.
+
+**Exercise 5.**Haga que la matriz limpia sea el producto de una matriz aleatoria de 50x3 y 3x40, y luego añada ruido para cada una $\sigma$- Por cada uno .$k$, comparar el rango .$k$reconstrucción con la matriz limpia; esperar lo mejor $k$cerca de 3 para el ruido bajo y más pequeño para el ruido alto.
 
 ## Términos clave
 

@@ -53,7 +53,7 @@ Step 10000: Expected distance from origin ~ 100 (sqrt(10000))
 
 **In 2D**, el paseo se mueve hacia arriba, hacia abajo, a la izquierda o a la derecha con la misma probabilidad.$\sqrt{n}$La escala se aplica a la distancia desde el origen.
 
-**Why $\sqrt{n}$?**Cada paso es +1 o -1 con igual probabilidad.$n$los pasos, la posición $S_n = X_1 + X_2 + \cdots + X_n$donde cada uno $X_i$¿ Es verdad ?$\pm 1$. La variación de cada paso es de 1, y los pasos son independientes, por lo que $\operatorname{Var}(S_n) = n$. Desviación estándar = $\sqrt{n}$Por el teorema del límite central,$S_n / \sqrt{n}$converge a una distribución normal estándar.
+**Why $\sqrt{n}$?**Cada paso es +1 o -1 con igual probabilidad.$n$los pasos, la posición $S_n = X_1 + X_2 + \cdots + X_n$donde cada uno $X_i$¿ Es verdad ?$\pm 1$. La variación de cada paso es de 1, y los pasos son independientes, por lo que $\mathop{\mathrm{Var}}(S_n) = n$. Desviación estándar = $\sqrt{n}$Por el teorema del límite central,$S_n / \sqrt{n}$converge a una distribución normal estándar.
 
 Esto .$\sqrt{n}$La escala de escala se muestra en todas partes en ML. Las escalas de ruido SGD son 1/sqrt(tamaño de lote).$\sqrt{d}$La raíz cuadrada es la firma de adiciones aleatorias independientes.
 
@@ -436,6 +436,18 @@ La clave de todas estas conexiones: los procesos estocásticos no son solo herra
 4. **Compare Langevin dynamics at different temperatures.**Muestra de un potencial de pozo doble $U(x) = (x^2 - 1)^2$A baja temperatura, las muestras se agrupan en un pozo. a alta temperatura, se extienden a ambos.
 
 5. **Implement the forward diffusion process.**Comience con una señal 1D (por ejemplo, una onda seno). Agregue el ruido progresivamente más de 100 pasos con un cronograma de ruido lineal. Muestre cómo la señal se degrada a ruido puro. Luego implemente un simple denoizador que invierte el proceso (incluso uno ingenuo que solo restará el ruido estimado).
+
+### Indicios
+
+**Exercise 1.**Llamé`random_walk_1d(10000, seed=i)`Para 1000 semillas y mantener cada posición final. compruebe que la media está cerca de 0, la desviación estándar está cerca de 100, y aproximadamente el 68% de las posiciones finales están entre -100 y 100.
+
+**Exercise 2.**Cuenta cada par de palabras, luego divide cada fila por su total para que cada fila se suma a 1. Pasar la matriz a `MarkovChain(transition_matrix, state_names)`y llamar`simulate`Compruebe que cada par de palabras en su salida también se encuentre en el corpus.
+
+**Exercise 3.**Acepta un punto peor con probabilidad .$\exp(-\Delta / T)$y multiplicarse.$T$Prueba en una función cuyo mínimo sabes, y compruebe tu respuesta con una búsqueda fina en la cuadrícula.
+
+**Exercise 4.**El gradiente es $4x(x^2 - 1)$, así que pasa eso a `langevin_dynamics(grad_U, x0, dt, temperature, n_steps)`La barrera en la$x = 0$tiene altura 1, así que cuenta con qué frecuencia el signo de$x$en el caso de los cambios de temperatura de 0,05 a 1, y buscar la temperatura en la que el recuento comience a aumentar rápidamente.
+
+**Exercise 5.**Llamé`diffusion_forward(signal, 100)`y la computación .$\bar{\alpha}$en el último paso como producto de $(1 - \beta_t)$Si ...$\bar{\alpha}$está lejos de 0, la señal aún no es ruido puro, así que eleva `beta_end`Prueba tu desinfectador primero con el ruido verdadero .$(x_t - \sqrt{1 - \bar{\alpha}_t} \epsilon)/\sqrt{\bar{\alpha}_t}$debe devolver la señal original exactamente.
 
 ## Términos clave
 

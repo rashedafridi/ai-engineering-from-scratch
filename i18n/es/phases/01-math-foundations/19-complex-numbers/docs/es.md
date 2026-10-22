@@ -105,7 +105,7 @@ Cualquier punto del plano puede describirse por su distancia del origen y su án
 \begin{aligned}
 z &= r (\cos\theta + i \sin\theta) \\[4pt]
 \text{where: } r &= |z| = \sqrt{a^2 + b^2} \quad \text{(magnitude, or modulus)} \\
-\theta &= \operatorname{atan2}(b, a) \quad \text{(phase, or argument)}
+\theta &= \mathop{\mathrm{atan2}}(b, a) \quad \text{(phase, or argument)}
 \end{aligned}
 ```
 
@@ -250,7 +250,7 @@ Los pares de pecado y cos son las partes reales e imaginarias de exponenciales c
 | Multiplication | $(ac-bd) + (ad+bc)i$ | Rotate and scale |
 | Conjugate | $a - bi$ | Reflect over real axis |
 | Magnitude | $\sqrt{a^2 + b^2}$ | Distance from origin |
-| Phase | $\operatorname{atan2}(b, a)$ | Angle from positive real axis |
+| Phase | $\mathop{\mathrm{atan2}}(b, a)$ | Angle from positive real axis |
 | Division | multiply by conjugate | Reverse rotation and rescale |
 | Power | $r^n e^{in\theta}$ | Rotate $n$ times, scale by $r^n$ |
 
@@ -440,6 +440,18 @@ freqs = np.fft.fftfreq(128, d=1/128)
 
 5. **Rotation matrix equivalence.**Para 10 ángulos aleatorios y 10 puntos aleatorios, verifique que la multiplicación compleja da el mismo resultado que la multiplicación de matrices-vectores con la matriz de rotación 2x2. Imprima la diferencia numérica máxima.
 
+### Indicios
+
+**Exercise 1.**Expande el producto con $i^2 = -1$, luego dividir multiplicando la parte superior y la parte inferior por el conjugado $1 + 3i$- Compruebe el producto con`Complex(2, 3) * Complex(4, -1)`: su `magnitude()`debe ser igual al producto de las dos magnitudes, y su`phase()`debe ser igual a la suma de las dos fases.
+
+**Exercise 2.**Haz el paso con `euler(math.pi / 6)`y multiplicar 12 veces. En cada paso, compruebe que la magnitud permanece 1 y que el ángulo crece en 30 grados. El punto final debe estar dentro de aproximadamente 1e-12 de (1, 0).
+
+**Exercise 3.**Haga los puntos de tiempo con $t = n/32$y llamar`dft`Sólo mira en los contenedores 0 a 15, porque la mitad superior es una imagen especular.$k$para un seno de amplitud $A$¿ Es verdad ?$AN/2$, así que espere alrededor de 16 en el cuadro 3 y alrededor de 8 en el cuadro 7.
+
+**Exercise 4.**Llamé`roots_of_unity(8)`y agregar las raíces: la magnitud de la suma debe ser cerca de 0. Dividir cada raíz por la raíz anterior y comprobar que cada resultado es igual `euler(2 * math.pi / 8)`¿ Qué ?
+
+**Exercise 5.**La matriz de rotación es [[cos t, -sin t], [sin t, cos t]]. Para cada ángulo y punto, calcular `euler(t) * Complex(x, y)`y el producto de la matriz, luego registran la mayor diferencia absoluta.$10^{-15}$¿ Qué ?
+
 ## Términos clave
 
 | Term | What it means |
@@ -448,7 +460,7 @@ freqs = np.fft.fftfreq(128, d=1/128)
 | Imaginary unit | The number $i$, defined by $i^2 = -1$. Not imaginary in the philosophical sense -- it is a rotation operator |
 | Complex plane | The 2D plane where the x-axis is real and the y-axis is imaginary. Also called the Argand plane |
 | Magnitude (modulus) | The distance from the origin: $\sqrt{a^2 + b^2}$. Written as $\lvert z \rvert$ |
-| Phase (argument) | The angle from the positive real axis: $\operatorname{atan2}(b, a)$. Written as $\arg(z)$ |
+| Phase (argument) | The angle from the positive real axis: $\mathop{\mathrm{atan2}}(b, a)$. Written as $\arg(z)$ |
 | Conjugate | The mirror image across the real axis: conjugate of $a + bi$ is $a - bi$ |
 | Polar form | Expressing $z$ as $r e^{i\theta}$ instead of $a + bi$. Makes multiplication easy |
 | Euler's formula | $e^{i\theta} = \cos\theta + i \sin\theta$. Connects exponentials to trigonometry |
