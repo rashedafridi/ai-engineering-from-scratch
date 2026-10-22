@@ -173,7 +173,7 @@ Ce truc apparaît partout dans ML:
 Softmax convertit les logits en probabilités:
 
 ```math
-\operatorname{softmax}(x_i) = \frac{\exp(x_i)}{\sum_j \exp(x_j)}
+\mathop{\mathrm{softmax}}(x_i) = \frac{\exp(x_i)}{\sum_j \exp(x_j)}
 ```
 
 Sans le truc, les logits de [100, 101, 102] provoquent un débordement:
@@ -353,7 +353,7 @@ Layer 50: values in [0, inf]
 Normalité des récurrents et rééchelles d'activations à chaque couche:
 
 ```math
-\operatorname{LayerNorm}(x) = \frac{x - \operatorname{mean}(x)}{\operatorname{std}(x) + \epsilon} \cdot \gamma + \beta
+\mathop{\mathrm{LayerNorm}}(x) = \frac{x - \mathop{\mathrm{mean}}(x)}{\mathop{\mathrm{std}}(x) + \epsilon} \cdot \gamma + \beta
 ```
 
 Le `epsilon`(typiquement 1e-5) empêche la division par zéro lorsque toutes les activations sont identiques.`gamma`et `beta`Laissez le réseau restaurer toute l'échelle dont il a besoin.
@@ -579,6 +579,18 @@ Ces mises en œuvre stables se réapparaissent à la phase 3 lors de la construc
 4. **Gradient checking a neural network layer.**Implémenter une seule couche linéaire `y = Wx + b`et son passage analytique à l'arrière.`numerical_gradient`pour vérifier la précision d'une matrice de poids 3x2.
 
 5. **Loss scaling experiment.**Simuler l'entraînement avec float16: créer des gradients aléatoires dans la plage [1e-9, 1e-3], convertir en float16, et mesurer quelle fraction devient zéro.
+
+### Des indices
+
+**Exercise 1.**Convertir les trois valeurs avec `np.float32`Avant de les écarter, alors appelez`variance_naive`et `welford_variance`Une valeur proche de$10^{12}$dans float32 a une distance beaucoup plus grande que 1, alors attendez-vous que le résultat naïf soit loin de 0,6667 et le résultat Welford soit proche.
+
+**Exercise 2.**Commencez par `x = np.float32(1.0)`et la réduire de moitié pendant que `np.float32(1.0) + x != np.float32(1.0)`. Conservez chaque valeur dans float32, puis comparez la dernière valeur qui a encore changé la somme avec `numpy.finfo(numpy.float32).eps`, qui est $2^{-23}$- Je suis désolé .
+
+**Exercise 3.**Prédire chaque réponse d'abord.$n$valeurs égales $c$, le résultat est $c + \ln n$Pour une valeur importante, le résultat est proche de cette valeur.$-1000 + \ln n$, alors que `logsumexp_naive`Retour `-inf`parce que chaque élément exponentiel descend à 0.
+
+**Exercise 4.**Pour $y = Wx + b$avec une perte $L$, le gradient pour $W$est le produit externe du gradient en amont et $x$- Remplir la perte en fonction de l' aplatissement$W$- Je vous appelle .`numerical_gradient`, et de passer les deux résultats à `check_gradient`- Je suis désolé .
+
+**Exercise 5.**Prenez des échantillons de la magnitude sur une échelle de jour avec `10 ** np.random.uniform(-9, -3, n)`et se convertir avec `np.float16`. Float16 ne peut pas maintenir les valeurs inférieures à environ $6 \times 10^{-8}$, alors attendez-vous à environ un quart des valeurs deviennent zéro avant l'échelle et presque aucun après que vous multipliez par 1024.
 
 ## Les termes clés
 

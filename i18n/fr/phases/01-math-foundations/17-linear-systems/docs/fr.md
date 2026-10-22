@@ -219,7 +219,7 @@ Cholesky est deux fois plus rapide que LU et nécessite la moitié du stockage.
 - Le Hessian d'une fonction convexe au minimum est symétrique positive définie.
 - $A^T A$est toujours symétrique positive semi-définie.
 
-Dans les processus gaussiens, vous faites le facteur de la matrice du noyau $K$Avec Cholesky, puis résoudre.$K \alpha = y$Le facteur Cholesky vous donne aussi le log-déterminant de la probabilité marginale:$\log \det(K) = 2 \sum \log(\operatorname{diag}(L))$- Je suis désolé .
+Dans les processus gaussiens, vous faites le facteur de la matrice du noyau $K$Avec Cholesky, puis résoudre.$K \alpha = y$Le facteur Cholesky vous donne aussi le log-déterminant de la probabilité marginale:$\log \det(K) = 2 \sum \log(\mathop{\mathrm{diag}}(L))$- Je suis désolé .
 
 ### Les carrés minimaux: lorsque Ax = b n'a pas de solution exacte
 
@@ -385,7 +385,7 @@ Chaque méthode de cette leçon est présentée dans la production ML:
 
 **Ridge regression.**Ajout $\lambda I$à $X^T X$- Le système réglementé$(X^T X + \lambda I) w = X^T y$est toujours résolvable via Cholesky parce que $X^T X + \lambda I$est symétrique positive définie pour $\lambda > 0$- Je suis désolé .
 
-**Gaussian processes.**La moyenne prédictive nécessite une résolution $K \alpha = y$où $K$est la matrice du noyau.$K$L'analyse de la probabilité marginale utilise$\log \det(K) = 2 \sum \log(\operatorname{diag}(L))$- Je suis désolé .
+**Gaussian processes.**La moyenne prédictive nécessite une résolution $K \alpha = y$où $K$est la matrice du noyau.$K$L'analyse de la probabilité marginale utilise$\log \det(K) = 2 \sum \log(\mathop{\mathrm{diag}}(L))$- Je suis désolé .
 
 **Neural network initialization.**L'initialisation orthogonale utilise la décomposition QR pour créer des matrices de poids dont les colonnes sont orthonormales.
 
@@ -559,6 +559,18 @@ Cette leçon donne:
 4. Appliquer l'algorithme de gradient conjugué pour une matrice définie positive symétrique aléatoire 100x100. Comptez combien d'itérations il faut pour converger à la tolérance 1e-8.$n$les itérations.
 
 5. Temps de votre solveur Cholesky vs votre solveur LU vs `np.linalg.solve`Sur des matrices positives symétriques de taille 10, 50, 200, 500, tracez les résultats.
+
+### Des indices
+
+**Exercise 1.**Appel`gaussian_elimination(A, b)`Alors ...`lu_decompose(A)`suivie de `lu_solve(P, L, U, b)`Alors ...`np.linalg.solve(A, b)`Vérifiez chaque réponse avec `np.allclose(A @ x, b)`et comparer les trois réponses avec `np.allclose`- Je suis désolé .
+
+**Exercise 2.**Utilisation `least_squares_normal`Pour les équations normales et les trois fonctions NumPy pour les autres méthodes, les quatre réponses doivent être proches de `w_true`- Comparer`condition_number(X.T @ X)`avec `condition_number(X)`: le premier est le carré du second, donc les équations normales perdent la plus grande précision.
+
+**Exercise 3.**Attendez-vous à un numéro de condition ci-dessus $10^{9}$- Résolvez avec `np.linalg.solve`et avec `ridge_regression(A, b, 0.01)`, puis comparer `np.linalg.norm(x)`Les deux résidus peuvent être petits, mais la solution sans régularisation a généralement de très grandes entrées.
+
+**Exercise 4.**Faites une matrice définie positive symétrique avec `B @ B.T + n * np.eye(n)`, de sorte que chaque valeur propre est positive. Ajoutez un compteur à la boucle dans votre copie de `conjugate_gradient`, puis vérifiez que la norme résiduelle finale est inférieure à 1e-8 et que le nombre est au maximum de 100.
+
+**Exercise 5.**Utilisez la même .`B @ B.T + n * np.eye(n)`matrices pour les trois résolveurs et le temps chaque résoudre avec `time.perf_counter`Cholesky a besoin d'environ la moitié de l'arithmétique de LU, donc le rapport est le plus clair sur les tailles plus grandes.
 
 ## Les termes clés
 
